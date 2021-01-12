@@ -1,0 +1,91 @@
+{% extends "html/base.html" %}
+{% load static %}
+{% block content %}
+
+    <section class="ftco-section ftco-no-pt">
+        <form method="post" action="/result_analize_two" enctype="multipart/form-data" class="search-property">
+            <div class="container">
+                <div class="row">
+                    <div class="text pb-4 pt-5">
+                        <h1 class="mb-4">Анализ двух материалов</h1>
+                        <div class="desc">
+                            <p>Данный анализ покажет насколько совпадают тезарусы данных материалов.</p>
+                            <p>Для добавления материалов введите название и текст в соответствующие поля ниже.</p>
+                            <p>Для проведения анализа нажмите на кнопку "Выполнить анализ" в самом низу страницы.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="heading-section mb-4 ml-md-4 pl-md-5">
+                            <h3 class="mb-4">
+                                Первый материал для анализа
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-12 align-items-end ftco-animate">
+                                    <div class="form-group">
+                                        <label for="#">Название материала</label>
+                                        <div class="form-field">
+                                            <input type="text" class="form-control" placeholder="Введите название"
+                                                   name="one_material_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 align-items-end ftco-animate">
+                                    <div class="form-group">
+                                        <label for="#">Текст материала</label>
+                                        <div class="form-field">
+                                        <textarea class="form-control" placeholder="Введите текст"
+                                                  name="one_text_area"></textarea>
+                                        </div>
+                                        {% csrf_token %}
+                                        <input type="file" accept=".docx" class="form-control"  name="one_uploaded_file"/>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex">
+                        <div class="heading-section mb-4 ml-md-4 pl-md-5">
+                            <h3 class="mb-4">
+                                Второй материал для анализа
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-12 align-items-end ftco-animate">
+                                    <div class="form-group">
+                                        <label for="#">Название материала</label>
+                                        <div class="form-field">
+                                            <input type="text" class="form-control" placeholder="Введите название"
+                                                   name="two_material_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 align-items-end ftco-animate">
+                                    <div class="form-group">
+                                        <label for="#">Текст материала</label>
+                                        <div class="form-field">
+                                        <textarea class="form-control" placeholder="Введите текст"
+                                                  name="two_text_area"></textarea>
+                                        </div>
+                                        {% csrf_token %}
+                                        <input type="file" accept=".docx" class="form-control" name="two_uploaded_file"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-12 align-self-end ftco-animate">
+                            <div class="form-group">
+                                <div class="form-field">
+                                    <input type="submit" value="Выполнить анализ"
+                                           class="form-control btn btn-primary"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+{% endblock %}

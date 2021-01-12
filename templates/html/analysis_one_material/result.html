@@ -1,0 +1,56 @@
+{% extends "html/base.html" %}
+
+{% block content %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">Анализатор текста на совместимость</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                    aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="properties.html" class="nav-link">Главное меню</a></li>
+                    <li class="nav-item cta"><a href="#" class="nav-link"><span>О сервисе</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="ftco-section ftco-no-pt">
+        <div class="container">
+            <div class="row">
+                <div class="text pb-4 pt-5">
+                    <h1 class="mb-4">Результаты анализа</h1>
+                    <div class="desc">
+                        <p>Данный анализ показывает насколько совпадают тезарусы фрагментов.</p>
+                        <p>Для подробного просмотра результатов сравнения фрагментов нажмите "подробнее" в таблице.</p>
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название фрагмента 1</th>
+                        <th scope="col">Название фрагмента 2</th>
+                        <th scope="col">Результат анализа</th>
+                        <th scope="col">Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="table-fragment">1</th>
+                        <td class="table-fragment">название фрагмента 1</td>
+                        <td class="table-fragment">название фрагмента 2</td>
+                        <td class="table-fragment">50%</td>
+                        <td><a href="" class="table-fragment">подробнее</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

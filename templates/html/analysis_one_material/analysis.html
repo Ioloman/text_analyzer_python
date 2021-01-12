@@ -1,0 +1,103 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <section class="ftco-section ftco-no-pt">
+        <div class="container">
+            <div class="row">
+                <div class="text pb-4 pt-5">
+                    <h1 class="mb-4">Анализ одного материала</h1>
+                    <div class="desc">
+                        <p>Данный анализ покажет насколько плавно излагается информация в материале. Для этого загрузите
+                            фрагменты учебного материала, анализировать которые Вы хотите.</p>
+                        <p>Для добавления фрагмента введите название и текст в соответствующие поля и нажмите "Добавить
+                            фрагмент".</p>
+                        <p>Добавленные фраменты будут видны в таблице ниже.</p>
+                        <p>Для проведения анализа нажмите на кнопку "Выполнить анализ" в самом низу страницы.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="heading-section mb-4 ml-md-4 pl-md-5">
+                        <h3 class="mb-4">
+                            Добавить фрагмент для анализа
+                        </h3>
+                        <form action="#" class="search-property">
+                            <div class="row">
+                                <div class="col-md-12 align-items-end ftco-animate">
+                                    <div class="form-group">
+                                        <label for="#">Название фрагмента</label>
+                                        <div class="form-field">
+                                            <input type="text" class="form-control" placeholder="Введите название"
+                                                   id="name_text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 align-items-end ftco-animate">
+                                    <div class="form-group">
+                                        <label for="#">Текст фрагмента</label>
+                                        <div class="form-field">
+                                            <textarea class="form-control" placeholder="Введите текст"
+                                                      id="text_for_analize"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 align-self-end ftco-animate">
+                                    <div class="form-group">
+                                        <div class="form-field">
+                                            <input type="submit" value="Добавить фрагмент"
+                                                   class="form-control btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt">
+        <div class="container">
+            <div class="row">
+                <div class="heading-section mb-4 ml-md-4 pl-md-5">
+                    <h3 class="mb-4">
+                        Анализируемые фрагменты
+                    </h3>
+                </div>
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Текст</th>
+                        <th scope="col">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="table-fragment">1</th>
+                        <td class="table-fragment">название фрагмента</td>
+                        <td class="table-fragment">текст фрагмента</td>
+                        <td><a href="" class="table-fragment">удалить</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="col-md-12">
+                    <form action="/result_analize_one" class="search-property">
+                        <div class="col-md-12 align-self-end ftco-animate">
+                            <div class="form-group">
+                                <div class="form-field">
+                                    <input type="submit" value="Выполнить анализ" class="form-control btn btn-primary">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

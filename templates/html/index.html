@@ -1,0 +1,27 @@
+{% extends "html/base.html" %}
+{% load static %}
+  {% block content %}
+	<section class="ftco-section ftco-no-pt">
+		<div class="container">
+			<div class="row no-gutters">
+				<div class="col-md-5 p-md-5 img img-2 d-flex align-self-stretch align-items-center justify-content-center" style="background-image: url({% static 'images/about.jpg'%})">
+				</div>
+				<div class="col-md-7 pt-5 mt-5 wrap-about pb-md-5 ftco-animate">
+		        	<div class="heading-section mb-5">
+		          		<div class="pl-md-5 ml-md-5">
+			           		<h2 class="mb-4">Добро пожаловать на веб сервис для анализа текста на совместимость!</h2>
+		            	</div>
+		          	</div>
+		          	<div class="pl-md-5 ml-md-5 mb-5">
+		            	<div class="row">
+		              		<div class="col-md-12 align-self-end ftco-animate">
+		                		<p><a href="/analize_two" class="btn-custom">Перейти как анализу</a></p>
+		              		</div>   
+		            	</div>
+		            </div> 
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+    
