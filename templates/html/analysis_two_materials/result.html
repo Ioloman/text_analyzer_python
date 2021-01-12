@@ -63,5 +63,8 @@
             </div>
         </div>
     </section>
+    {{ json_data|json_script:"json-data" }}
+    {% load static %}
+    <script src="{% static 'js/visualisation/main.js' %}"></script>
 
 {% endblock %}
