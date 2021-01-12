@@ -1,0 +1,3 @@
+DEBUG = False
+
+ALLOWED_HOSTS = ['188.225.76.126', '372902-cg66680.tmweb.ru']
