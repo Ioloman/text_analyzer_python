@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from analyzer.analyzer_class.read_file import ReadFile
 from analyzer.analyzer_class.compatibility_analysis import CompatibilityAnalysis
@@ -52,19 +54,13 @@ def result_analize_two(request):
     one_data, two_data, result = compatibility_analysis(one_text_area, two_text_area,
                                                         one_uploaded_file, two_uploaded_file)
 
-    import gc
-    del compatibility_analysis
-    del one_text_area
-    del two_text_area
-    del one_uploaded_file
-    del two_uploaded_file
-    del read_file
-    gc.collect()
-
+    one_data, two_data = map(list, (one_data, two_data))
+    json_data = json.dumps([one_data, two_data])
 
     return render(request,
                   'html/analysis_two_materials/result.html', context={'one_material_name': one_material_name,
-                                                    'two_material_name': two_material_name,
-                                                    'one_data': one_data,
-                                                    'two_data': two_data,
-                                                    'result': result})
+                                                                      'two_material_name': two_material_name,
+                                                                      'one_data': one_data,
+                                                                      'two_data': two_data,
+                                                                      'result': result,
+                                                                      'json_data': json_data})
