@@ -167,5 +167,3 @@ document.getElementById('secondList').ondblclick = evt => {
 }
 
 
-
-
