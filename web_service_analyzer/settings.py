@@ -129,6 +129,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 try:
     from .release_settings import *
 except ImportError:
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "static"),
-    )
+    pass
