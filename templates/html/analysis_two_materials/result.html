@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <section class="ftco-section ftco-no-pt">
+    <section class="ftco-section ftco-no-pt" id="first-data">
         <div class="container">
             <div class="row">
                 <div class="text pb-4 pt-5">
@@ -11,6 +11,11 @@
                         <p>Данный анализ показывает насколько соместимы анализируемые материалы.</p>
                         <h4 class="mb-4">Совместимость: {{ result }}%</h4>
                     </div>
+                </div>
+                <div class="col-md-6 chart">
+                    <br><br><br>
+                    <canvas id="firstOverlay" style="position:absolute;pointer-events:none;"></canvas>
+                    <canvas id="firstChart" height="200"></canvas>
                 </div>
                 <div class="col-md-6">
                     <div class="heading-section mb-4 ml-md-4 pl-md-5">
@@ -25,7 +30,7 @@
                                 <th scope="col">TF-IDF</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="firstList">
                             {% for key, value in one_data %}
                                 <tr>
                                     <td class="table-fragment">{{ key }}</td>
@@ -35,6 +40,18 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt" id="second-data">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 chart">
+                    <br><br><br>
+                    <canvas id="secondOverlay" style="position:absolute;pointer-events:none;"></canvas>
+                    <canvas id="secondChart"></canvas>
                 </div>
                 <div class="col-md-6 ">
                     <div class="heading-section mb-4 ml-md-4 pl-md-5">
@@ -49,7 +66,7 @@
                                 <th scope="col">TF-IDF</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="secondList">
                             {% for key, value in two_data %}
                                 <tr>
                                     <td class="table-fragment">{{ key }}</td>
@@ -63,8 +80,17 @@
             </div>
         </div>
     </section>
+
     {{ json_data|json_script:"json-data" }}
+    {{ one_material_name|json_script:"name1" }}
+    {{ two_material_name|json_script:"name2" }}
     {% load static %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+            integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"
+            integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww=="
+            crossorigin="anonymous"></script>
     <script src="{% static 'js/visualisation/main.js' %}"></script>
 
 {% endblock %}
