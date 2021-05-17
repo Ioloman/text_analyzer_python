@@ -5,7 +5,6 @@ import numpy as np
 
 
 class TFIDF(object):
-
     def __call__(self, texts):
         dictionary = corpora.Dictionary(texts)
         corpus = [dictionary.doc2bow(text) for text in texts]

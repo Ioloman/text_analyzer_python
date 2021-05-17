@@ -1,5 +1,4 @@
 import json
-
 from django.shortcuts import render
 from analyzer.analyzer_class.read_file import ReadFile
 from analyzer.analyzer_class.compatibility_analysis import CompatibilityAnalysis

@@ -11,6 +11,7 @@ from natasha import (
 
 from rutermextract import TermExtractor
 
+
 class Tokenizer(object):
     def __init__(self):
         self.segmenter = Segmenter()
