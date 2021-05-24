@@ -1,44 +1,29 @@
-from natasha import (
-    Segmenter,
-    MorphVocab,
-
-    NewsEmbedding,
-    NewsMorphTagger,
-    NewsSyntaxParser,
-    NewsNERTagger,
-    NamesExtractor,
-    Doc)
-
 from rutermextract import TermExtractor
+from razdel import sentenize
+from navec import Navec
+from slovnet import NER
 
 
 class Tokenizer(object):
     def __init__(self):
-        self.segmenter = Segmenter()
-        self.emb = NewsEmbedding()
-        self.syntax_parser = NewsSyntaxParser(self.emb)
-        self.ner_tagger = NewsNERTagger(self.emb)
-        self.doc = []
         self.term_extractor = TermExtractor()
-
-    def init_doc(self, text):
-        self.doc = Doc(text)
-        self.doc.segment(self.segmenter)
-        self.doc.tag_ner(self.ner_tagger)
+        navec = Navec.load('models/navec_news_v1_1B_250K_300d_100q.tar')
+        self.ner = NER.load('models/slovnet_ner_news_v1.tar')
+        self.ner.navec(navec)
 
     def get_sentance(self, text):
-        doc = Doc(text)
-        doc.segment(self.segmenter)
-        return [sentence.text for sentence in doc.sents]
+        return [sentence.text for sentence in sentenize(text)]
 
     def get_tokens(self, sentence):
         sentence = ' '.join(sentence)
         return [token.normalized for token in self.term_extractor(sentence)]
 
     def get_ner(self, sentence):
-        if sentence == []:
-            sentence.append("")
-        doc = Doc(sentence)
-        doc.segment(self.segmenter)
-        doc.tag_ner(self.ner_tagger)
-        return [span.text for span in doc.spans]
+        # не знаю зачем это было, я закомментил и
+        # на всякий оставлю, вдруг баг появится
+        # if sentence == []:
+        #     sentence.append("")
+
+        markup = self.ner(sentence)
+        return [sentence[span.start: span.stop] for span in markup.spans]
+
