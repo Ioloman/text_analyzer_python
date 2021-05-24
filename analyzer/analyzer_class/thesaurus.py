@@ -1,11 +1,14 @@
 from analyzer.analyzer_class.text_preprocessing import TextPreprocessing
 from analyzer.analyzer_class.tf_idf import TFIDF
 from analyzer.analyzer_class.candidates import Candidates
+from analyzer.analyzer_class.tokenizer import Tokenizer
+
 
 class Thesaurus(object):
     def __init__(self):
-        self.text_preprocessing = TextPreprocessing()
-        self.candidates = Candidates()
+        tokenizer = Tokenizer()
+        self.text_preprocessing = TextPreprocessing(tokenizer)
+        self.candidates = Candidates(tokenizer)
         self.tf_idf = TFIDF()
         self.alpha = 80
         self.betta = 0.9

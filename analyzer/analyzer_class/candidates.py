@@ -6,8 +6,8 @@ def list_compilation(one_list, two_list):
 
 
 class Candidates(object):
-    def __init__(self):
-        self.tokenizer = Tokenizer()
+    def __init__(self, tokenizer: Tokenizer):
+        self.tokenizer = tokenizer
 
     def __call__(self, sentences, ner, abbr):
         # Извлечение ключевых слов
