@@ -1,10 +1,11 @@
+from analyzer.analyzer_class.singleton_meta import SingletonMeta
 from analyzer.analyzer_class.text_preprocessing import TextPreprocessing
 from analyzer.analyzer_class.tf_idf import TFIDF
 from analyzer.analyzer_class.candidates import Candidates
 from analyzer.analyzer_class.tokenizer import Tokenizer
 
 
-class Thesaurus(object):
+class Thesaurus(object, metaclass=SingletonMeta):
     def __init__(self):
         tokenizer = Tokenizer()
         self.text_preprocessing = TextPreprocessing(tokenizer)
