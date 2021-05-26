@@ -20,12 +20,13 @@ class Thesaurus(metaclass=SingletonMeta):
         candidates = self.candidates(clean_sentences, ner, abbr)
         keys, values = self.tf_idf(candidates)
         n = self.get_n(len(keys))
-        keys, values = self.get_thesaurus_range(keys,values, n)
+        keys, values = self.get_thesaurus_range(keys, values, n)
         return keys, zip(keys, values)
 
-    def get_n(self,number_of_all_words):
-        return round(pow(number_of_all_words/self.alpha,1/self.betta))
+    def get_n(self, number_of_all_words: int) -> int:
+        return round(pow(number_of_all_words/self.alpha, 1/self.betta))
 
-    def get_thesaurus_range(self, keys, values, n):
+    @staticmethod
+    def get_thesaurus_range(keys: List[str], values: List[float], n: int) -> Tuple[List[str], List[float]]:
         return keys[0:n], values[0:n]
 
