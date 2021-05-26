@@ -1,3 +1,5 @@
+from typing import List
+
 from rutermextract import TermExtractor
 from razdel import sentenize
 from navec import Navec
@@ -11,14 +13,27 @@ class Tokenizer(object):
         self.ner = NER.load('models/slovnet_ner_news_v1.tar')
         self.ner.navec(navec)
 
-    def get_sentance(self, text):
+    def get_sentance(self, text: str) -> List[str]:
+        """
+        Разбивает текст на предложения
+        """
         return [sentence.text for sentence in sentenize(text)]
 
-    def get_tokens(self, sentence):
+    def get_tokens(self, sentence: List[str]) -> List[str]:
+        """
+        Нормализует слова
+        :param sentence: список слов
+        :return: список нормализованных слов
+        """
         sentence = ' '.join(sentence)
         return [token.normalized for token in self.term_extractor(sentence)]
 
-    def get_ner(self, sentence):
+    def get_ner(self, sentence: str) -> List[str]:
+        """
+        Возвращает список именованных сущностей из предложения
+        :param sentence: предложение
+        :return: список именованных сущностей
+        """
         # не знаю зачем это было, я закомментил и
         # на всякий оставлю, вдруг баг появится
         # if sentence == []:

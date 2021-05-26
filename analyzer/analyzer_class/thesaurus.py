@@ -1,3 +1,4 @@
+from typing import Tuple, List, Iterator
 from analyzer.analyzer_class.singleton_meta import SingletonMeta
 from analyzer.analyzer_class.text_preprocessing import TextPreprocessing
 from analyzer.analyzer_class.tf_idf import TFIDF
@@ -5,7 +6,7 @@ from analyzer.analyzer_class.candidates import Candidates
 from analyzer.analyzer_class.tokenizer import Tokenizer
 
 
-class Thesaurus(object, metaclass=SingletonMeta):
+class Thesaurus(metaclass=SingletonMeta):
     def __init__(self):
         tokenizer = Tokenizer()
         self.text_preprocessing = TextPreprocessing(tokenizer)
@@ -14,7 +15,7 @@ class Thesaurus(object, metaclass=SingletonMeta):
         self.alpha = 80
         self.betta = 0.9
 
-    def __call__(self, text):
+    def __call__(self, text: str) -> Tuple[List[str], Iterator[Tuple[str, str]]]:
         clean_sentences, ner, abbr = self.text_preprocessing(text)
         candidates = self.candidates(clean_sentences, ner, abbr)
         keys, values = self.tf_idf(candidates)
