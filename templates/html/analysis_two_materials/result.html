@@ -1,17 +1,21 @@
 {% extends "html/base.html" %}
 
 {% block content %}
-
+    <div class="container">
+        <div class="row">
+            <div class="text pb-4 pt-5">
+                <h1 class="mb-4">Результаты анализа</h1>
+                <div class="desc">
+                    <p>Данный анализ показывает насколько соместимы анализируемые материалы.</p>
+                    <h4 class="mb-4">Совместимость: {{ result }}%</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if one_data %}
     <section class="ftco-section ftco-no-pt" id="first-data">
         <div class="container">
             <div class="row">
-                <div class="text pb-4 pt-5">
-                    <h1 class="mb-4">Результаты анализа</h1>
-                    <div class="desc">
-                        <p>Данный анализ показывает насколько соместимы анализируемые материалы.</p>
-                        <h4 class="mb-4">Совместимость: {{ result }}%</h4>
-                    </div>
-                </div>
                 <div class="col-md-6 chart">
                     <br><br><br>
                     <canvas id="firstOverlay" style="position:absolute;pointer-events:none;"></canvas>
@@ -44,7 +48,9 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
+    {% if two_data %}
     <section class="ftco-section ftco-no-pt" id="second-data">
         <div class="container">
             <div class="row">
@@ -80,6 +86,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     {{ json_data|json_script:"json-data" }}
     {{ one_material_name|json_script:"name1" }}
@@ -93,4 +100,9 @@
             crossorigin="anonymous"></script>
     <script src="{% static 'js/visualisation/main.js' %}"></script>
 
+{% endblock %}
+{% block script %}
+{% autoescape off %}
+{{ notification }}
+{% endautoescape %}
 {% endblock %}

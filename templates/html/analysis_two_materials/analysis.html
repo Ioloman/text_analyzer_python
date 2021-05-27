@@ -25,7 +25,7 @@
                                         <label for="#">Название материала</label>
                                         <div class="form-field">
                                             <input type="text" class="form-control" placeholder="Введите название"
-                                                   name="one_material_name">
+                                                   name="one_material_name" value="{{ one_material_name }}">
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@
                                         <label for="#">Текст материала</label>
                                         <div class="form-field">
                                         <textarea class="form-control" placeholder="Введите текст"
-                                                  name="one_text_area"></textarea>
+                                                  name="one_text_area">{{ one_text_area }}</textarea>
                                         </div>
                                         {% csrf_token %}
                                         <input type="file" accept=".docx" class="form-control"  name="one_uploaded_file"/>
@@ -55,7 +55,7 @@
                                         <label for="#">Название материала</label>
                                         <div class="form-field">
                                             <input type="text" class="form-control" placeholder="Введите название"
-                                                   name="two_material_name">
+                                                   name="two_material_name" value="{{ two_material_name }}">
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                         <label for="#">Текст материала</label>
                                         <div class="form-field">
                                         <textarea class="form-control" placeholder="Введите текст"
-                                                  name="two_text_area"></textarea>
+                                                  name="two_text_area">{{ two_text_area }}</textarea>
                                         </div>
                                         {% csrf_token %}
                                         <input type="file" accept=".docx" class="form-control" name="two_uploaded_file"/>
@@ -89,3 +89,10 @@
         </form>
     </section>
 {% endblock %}
+
+{% block script %}
+{% autoescape off %}
+{{ notification }}
+{% endautoescape %}
+{% endblock %}
+
