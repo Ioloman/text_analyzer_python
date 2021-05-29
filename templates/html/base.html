@@ -20,6 +20,7 @@
     <link href="{% static 'css/flaticon.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/icomoon.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+    <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
 
 </head>
 <body>
@@ -49,6 +50,7 @@
     </svg>
 </div>
 <script src="{% static 'js/jquery.min.js' %}"></script>
+<script>$(document).ready({% block script %}{% endblock %})</script>
 <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>

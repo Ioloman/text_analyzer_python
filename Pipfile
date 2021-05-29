@@ -6,17 +6,15 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-docxtpl = "*"
+python-docx = "*"
 django = "*"
-joblib = "*"
-nltk = "*"
-maru = "*"
 pymorphy2 = "*"
-numpy = "*"
-matplotlib = "*"
-natasha = "*"
+razdel = "*"
+navec = "*"
+slovnet = "*"
 rutermextract = "*"
 gensim = "*"
+gunicorn = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.8.10"

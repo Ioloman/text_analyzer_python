@@ -54,7 +54,18 @@ def result_analize_two(request):
                                                         one_uploaded_file, two_uploaded_file)
 
     one_data, two_data = map(list, (one_data, two_data))
+    if not list(one_data) and not list(two_data):
+        return render(request, 'html/analysis_two_materials/analysis.html',
+                      {'one_material_name': one_material_name,
+                       'two_material_name': two_material_name,
+                       'one_text_area': one_text_area,
+                       'two_text_area': two_text_area,
+                       'notification': "alert('Оба текста слишком короткие.')"}
+                      )
+
     json_data = json.dumps([one_data, two_data])
+
+    js_code = f"alert('Текст \"{one_material_name if not one_data else two_material_name}\" слишком мал для определения тезауруса')" if not one_data or not two_data else ""
 
     return render(request,
                   'html/analysis_two_materials/result.html', context={'one_material_name': one_material_name,
@@ -62,4 +73,5 @@ def result_analize_two(request):
                                                                       'one_data': one_data,
                                                                       'two_data': two_data,
                                                                       'result': result,
-                                                                      'json_data': json_data})
+                                                                      'json_data': json_data,
+                                                                      'notification': js_code})

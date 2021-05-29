@@ -135,13 +135,6 @@ const getSelectionContext = (canvasID, chartCanvas) => changeSize(getCanvas(canv
 const data = JSON.parse(JSON.parse(document.getElementById("json-data").textContent))
 const [firstGraphData, secondGraphData] = data;
 const HEIGHT = 200;
-let firstCanvas = changeHeight(getCanvas('firstChart'), HEIGHT);
-let secondCanvas = changeHeight(getCanvas('secondChart'), HEIGHT);
-
-let firstChart = getChart(firstCanvas, firstGraphData, 'name1');
-let secondChart = getChart(secondCanvas, secondGraphData, 'name2');
-let firstSelectionContext = getSelectionContext('firstOverlay', firstCanvas);
-let secondSelectionContext = getSelectionContext('secondOverlay', secondCanvas);
 let [firstStartIndex, secondStartIndex] = [0, 0];
 let [firstSelectionRect, secondSelectionRect] = [{w: 0, startX: 0, startY: 0}, {w: 0, startX: 0, startY: 0}];
 let [firstDrag, secondDrag] = [false, false];
@@ -149,21 +142,41 @@ let [firstMutable, secondMutable] = [
     {drag: false, startIndex: 0, attachedListID: 'firstList'},
     {drag: false, startIndex: 0, attachedListID: 'secondList'}
 ]
-firstCanvas.onpointerdown = listenerPointerDown(firstChart, firstCanvas, firstSelectionRect, firstSelectionContext, firstMutable)
-firstCanvas.onpointermove = listenerPointerMove(firstChart, firstCanvas, firstSelectionRect, firstSelectionContext, firstMutable)
-firstCanvas.onpointerup = listenerPointerUp(firstChart, firstCanvas, firstSelectionRect, firstSelectionContext, firstMutable)
+try {
 
-secondCanvas.onpointerdown = listenerPointerDown(secondChart, secondCanvas, secondSelectionRect, secondSelectionContext, secondMutable)
-secondCanvas.onpointermove = listenerPointerMove(secondChart, secondCanvas, secondSelectionRect, secondSelectionContext, secondMutable)
-secondCanvas.onpointerup = listenerPointerUp(secondChart, secondCanvas, secondSelectionRect, secondSelectionContext, secondMutable)
+    let firstCanvas = changeHeight(getCanvas('firstChart'), HEIGHT);
 
-document.getElementById('firstList').ondblclick = evt => {
-    const listOfItems = Array.prototype.slice.call(document.getElementById('firstList').children);
-    listOfItems.forEach(value => value.style.display = '')
+    let firstChart = getChart(firstCanvas, firstGraphData, 'name1');
+
+    let firstSelectionContext = getSelectionContext('firstOverlay', firstCanvas);
+
+    firstCanvas.onpointerdown = listenerPointerDown(firstChart, firstCanvas, firstSelectionRect, firstSelectionContext, firstMutable)
+    firstCanvas.onpointermove = listenerPointerMove(firstChart, firstCanvas, firstSelectionRect, firstSelectionContext, firstMutable)
+    firstCanvas.onpointerup = listenerPointerUp(firstChart, firstCanvas, firstSelectionRect, firstSelectionContext, firstMutable)
+
+    document.getElementById('firstList').ondblclick = evt => {
+        const listOfItems = Array.prototype.slice.call(document.getElementById('firstList').children);
+        listOfItems.forEach(value => value.style.display = '')
+    }
+} catch (e) {
+    
 }
-document.getElementById('secondList').ondblclick = evt => {
-    const listOfItems = Array.prototype.slice.call(document.getElementById('secondList').children);
-    listOfItems.forEach(value => value.style.display = '')
+
+try {
+    let secondCanvas = changeHeight(getCanvas('secondChart'), HEIGHT);
+
+    let secondChart = getChart(secondCanvas, secondGraphData, 'name2');
+
+    let secondSelectionContext = getSelectionContext('secondOverlay', secondCanvas);
+
+    secondCanvas.onpointerdown = listenerPointerDown(secondChart, secondCanvas, secondSelectionRect, secondSelectionContext, secondMutable)
+    secondCanvas.onpointermove = listenerPointerMove(secondChart, secondCanvas, secondSelectionRect, secondSelectionContext, secondMutable)
+    secondCanvas.onpointerup = listenerPointerUp(secondChart, secondCanvas, secondSelectionRect, secondSelectionContext, secondMutable)
+
+    document.getElementById('secondList').ondblclick = evt => {
+        const listOfItems = Array.prototype.slice.call(document.getElementById('secondList').children);
+        listOfItems.forEach(value => value.style.display = '')
+    }
+} catch (e) {
+    
 }
-
-

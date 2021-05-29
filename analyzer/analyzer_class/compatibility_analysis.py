@@ -1,8 +1,10 @@
 from analyzer.analyzer_class.thesaurus import Thesaurus
 
 
-class CalculateTheProbability(object):
+class CalculateTheProbability:
     def __call__(self, one_keys, two_keys):
+        if not one_keys or not two_keys:
+            return 0
         common_keywords = []
         for word in two_keys:
             if word in one_keys:
@@ -11,7 +13,7 @@ class CalculateTheProbability(object):
         return results
 
 
-class CompatibilityAnalysis(object):
+class CompatibilityAnalysis:
     def __init__(self):
         self.thesaurus = Thesaurus()
         self.calculate_the_probability = CalculateTheProbability()
