@@ -21,9 +21,10 @@ class Tokenizer(object):
 
     def get_tokens(self, sentence: List[str]) -> List[str]:
         """
-        Нормализует слова
+        Выделяет ключевые слова в предложении и сразу нормализует их,
+        используя PyMorphy
         :param sentence: список слов
-        :return: список нормализованных слов
+        :return: список ключевых нормализованных слов
         """
         sentence = ' '.join(sentence)
         return [token.normalized for token in self.term_extractor(sentence)]

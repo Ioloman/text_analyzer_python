@@ -15,7 +15,7 @@ class Thesaurus(metaclass=SingletonMeta):
         self.alpha = 80
         self.betta = 0.9
 
-    def __call__(self, text: str) -> Tuple[List[str], Iterator[Tuple[str, str]]]:
+    def __call__(self, text: str) -> Tuple[List[str], Iterator[Tuple[str, float]]]:
         clean_sentences, ner, abbr = self.text_preprocessing(text)
         candidates = self.candidates(clean_sentences, ner, abbr)
         keys, values = self.tf_idf(candidates)
