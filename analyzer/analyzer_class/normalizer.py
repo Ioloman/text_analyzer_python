@@ -4,7 +4,7 @@ from typing import Iterator, List
 import pymorphy2
 
 
-class Normalizer(object):
+class Normalizer:
     def __init__(self):
         self.morph = pymorphy2.MorphAnalyzer()
         # self.analyzer = maru.get_analyzer(tagger='crf', lemmatizer='pymorphy')

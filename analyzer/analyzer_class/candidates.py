@@ -6,7 +6,7 @@ def list_compilation(one_list: List[List[str]], two_list: List[List[str]]) -> Li
     return [one_list[i] + two_list[i] for i in range(len(one_list))]
 
 
-class Candidates(object):
+class Candidates:
     def __init__(self, tokenizer: Tokenizer):
         self.tokenizer = tokenizer
 

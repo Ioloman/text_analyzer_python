@@ -3,7 +3,7 @@ from typing import Iterator, List
 import re
 
 
-class Cleaner(object):
+class Cleaner:
     def __init__(self):
         with open('stopwords.json', 'rt') as file:
             self.stop_words: List[str] = json.loads(file.read())

@@ -6,7 +6,7 @@ from navec import Navec
 from slovnet import NER
 
 
-class Tokenizer(object):
+class Tokenizer:
     def __init__(self):
         self.term_extractor = TermExtractor()
         navec = Navec.load('models/navec_news_v1_1B_250K_300d_100q.tar')
