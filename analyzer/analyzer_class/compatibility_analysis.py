@@ -28,8 +28,11 @@ class CompatibilityAnalysis:
         return one_data, two_data, result
 
     def get_thesaurus(self, uploaded_file, text_field):
-        if uploaded_file is not None:
-            keys, zip_data = self.thesaurus(text=uploaded_file)
-        else:
-            keys, zip_data = self.thesaurus(text=text_field)
-        return keys, zip_data
+        try:
+            if uploaded_file is not None:
+                keys, zip_data = self.thesaurus(text=uploaded_file)
+            else:
+                keys, zip_data = self.thesaurus(text=text_field)
+            return keys, zip_data
+        except IndexError:
+            return [], []
