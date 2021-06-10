@@ -1,26 +1,26 @@
+import math
 from collections import Counter
 from typing import List, Tuple, Dict
-from gensim import corpora, models
+from functools import reduce
 
 
-class TFIDF:
-    def __call__(self, texts: List[List[str]]) -> Tuple[List[str], List[float]]:
-        """
-        Определяет тезаурус и значения TF-IDF
-        """
-        dictionary = corpora.Dictionary(texts)
-        corpus = [dictionary.doc2bow(text) for text in texts]
-        tf_idf = models.TfidfModel(corpus)
-        corpus_tf_idf = tf_idf[corpus]
-        tf_idf_saliency = Counter()
-        for doc in corpus_tf_idf:
-            for word, score in doc:
-                tf_idf_saliency[word] += score / len(corpus_tf_idf)
-        dictionary_with_tf_idf: Dict[str, float] = {}
-        for i in range(len(tf_idf_saliency)):
-            dictionary_with_tf_idf[dictionary[i]] = tf_idf_saliency[i]
-        keys, values = sort(dictionary_with_tf_idf)
-        return keys, values
+def compute_tf(corpus: List[List[str]]) -> Dict[str, float]:
+    tf_dict = Counter(reduce(lambda a, b: a + b, corpus))
+    for word in tf_dict:
+        tf_dict[word] /= len(tf_dict)
+
+    return tf_dict
+
+
+def compute_idf(word: str, corpus: List[List[str]]) -> float:
+    return math.log10(len(corpus) / sum([1 for text in corpus if word in text]))
+
+
+def compute_tfidf(corpus: List[List[str]]) -> Tuple[List[str], List[float]]:
+    tfidf_dict = compute_tf(corpus)
+    for word in tfidf_dict:
+        tfidf_dict[word] *= compute_idf(word, corpus)
+    return sort(tfidf_dict)
 
 
 def sort(dictionary: dict):

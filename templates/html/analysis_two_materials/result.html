@@ -30,6 +30,7 @@
                         <table class="table table-bordered table-hover">
                             <thead class="thead-dark">
                             <tr>
+                                <th scope="col">#</th>
                                 <th scope="col">Элемент</th>
                                 <th scope="col">TF-IDF</th>
                             </tr>
@@ -37,6 +38,7 @@
                             <tbody id="firstList">
                             {% for key, value in one_data %}
                                 <tr>
+                                    <td class="table-fragment">{{ forloop.counter }}</td>
                                     <td class="table-fragment">{{ key }}</td>
                                     <td class="table-fragment">{{ value }}</td>
                                 </tr>
@@ -68,6 +70,7 @@
                         <table class="table table-bordered table-hover">
                             <thead class="thead-dark">
                             <tr>
+                                <th scope="col">#</th>
                                 <th scope="col">Элемент</th>
                                 <th scope="col">TF-IDF</th>
                             </tr>
@@ -75,6 +78,7 @@
                             <tbody id="secondList">
                             {% for key, value in two_data %}
                                 <tr>
+                                    <td class="table-fragment">{{ forloop.counter }}</td>
                                     <td class="table-fragment">{{ key }}</td>
                                     <td class="table-fragment">{{ value }}</td>
                                 </tr>
