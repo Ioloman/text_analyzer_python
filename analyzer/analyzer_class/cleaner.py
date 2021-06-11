@@ -7,19 +7,18 @@ class Cleaner:
     def __init__(self):
         with open('stopwords.json', 'rt') as file:
             self.stop_words: List[str] = json.loads(file.read())
+        self.re_str_abbr = r"\b[0-9]*[-]*[A-ZА-Я]{1,}[a-zа-я]*[A-ZА-Я]{1,}[-]*[a-zA-Zа-яА-Я0-9]*\b"
 
-    def delete_stop_words(self, words: Iterator[str]) -> List[str]:
+    def remove_stop_words(self, words: Iterator[str]) -> List[str]:
         """
         Убирает стоп-слова из списка
         """
         return [word for word in words if word not in self.stop_words]
 
-    def get_letter_words(self, text: str) -> List[str]:
+    def retrieve_abbrs(self, text: str) -> List[str]:
         """
-        Производит токенизацию предложения
+        Находит аббревиатуры приложения
         :param text: предложение
-        :return: список слов из предложения
+        :return: список аббревиатур приложения
         """
-        rep = re.compile("[^a-zA-Zа-яА-я]")
-        letter_words = rep.sub(" ", text).lower()
-        return re.findall(r'\b[а-яa-z]{3,15}\b', letter_words)
+        return re.findall(self.re_str_abbr, text)

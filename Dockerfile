@@ -5,6 +5,8 @@ WORKDIR /usr/src/text_analyzer
 COPY . .
 COPY ./release_settings.py web_service_analyzer/release_settings.py
 
+RUN apt update
+RUN apt install -y python-dev libxml2-dev libxslt1-dev antiword poppler-utils swig
 RUN pip install pipenv
 RUN pipenv install
 

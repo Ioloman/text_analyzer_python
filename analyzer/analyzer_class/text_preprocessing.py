@@ -1,7 +1,6 @@
 from typing import Iterator, Tuple, List
 from analyzer.analyzer_class.cleaner import Cleaner
 from analyzer.analyzer_class.tokenizer import Tokenizer
-from analyzer.analyzer_class.abbreviations import Abbreviations
 from analyzer.analyzer_class.normalizer import Normalizer
 
 
@@ -18,25 +17,28 @@ def clean(text: str, bad_words: Iterator[str]) -> str:
 
 
 class TextPreprocessing:
-    def __init__(self, tokenizer: Tokenizer):
+    def __init__(self):
         self.cleaner = Cleaner()
-        self.tokenizer = tokenizer
-        self.abbreviations = Abbreviations()
+        self.tokenizer = Tokenizer()
         self.normalizer = Normalizer()
-        self.size = 100000
 
-    def __call__(self, text: str) -> Tuple[List[List[str]], List[List[str]], List[List[str]]]:
+    def __call__(self, text: str) -> List[List[str]]:
         # Токенизация по предложениям
-        sentences = self.tokenizer.get_sentance(text)
+        sentences = self.tokenizer.split_to_sentences(text)
         # Очистка предложений от аббревиатур
-        sentences_abbr = list(map(self.abbreviations, sentences))
+        sentences_abbr = list(map(self.cleaner.retrieve_abbrs, sentences))
         clean_sentences = list(map(clean, sentences, sentences_abbr))
         # Выделение и нормализация именованных сущностей
         sentences_ner = list(map(self.tokenizer.get_ner, clean_sentences))
         clean_sentences = map(clean, clean_sentences, sentences_ner)
-        sentences_ner = list(map(self.normalizer.normalize_ner, sentences_ner))
+        sentences_ner = map(self.normalizer.normalize_ner, sentences_ner)
         # Токенизация по словам и удаление стоп-слов
-        clean_sentences_tokenized = map(self.cleaner.get_letter_words, clean_sentences)
-        clean_sentences_tokenized = list(map(self.cleaner.delete_stop_words, clean_sentences_tokenized))
+        clean_sentences_tokenized = map(self.tokenizer.split_to_tokens, clean_sentences)
+        clean_sentences_tokenized = map(self.cleaner.remove_stop_words, clean_sentences_tokenized)
+        # Извлечение ключевых слов
+        sentences_candidates = map(self.normalizer.get_normalized_key_tokens, clean_sentences_tokenized)
+        # Возвращение аббревиатур и именованных сущностей
+        sentences_candidates = map(lambda l1, l2: l1 + l2, sentences_candidates, sentences_abbr)
+        sentences_candidates = list(map(lambda l1, l2: l1 + l2, sentences_candidates, sentences_ner))
 
-        return clean_sentences_tokenized, sentences_ner, sentences_abbr
+        return sentences_candidates

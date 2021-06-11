@@ -37,7 +37,7 @@
                                                   name="one_text_area">{{ one_text_area }}</textarea>
                                         </div>
                                         {% csrf_token %}
-                                        <input type="file" accept=".docx" class="form-control"  name="one_uploaded_file"/>
+                                        <input type="file" accept=".docx,.doc,.pdf,.txt" class="form-control"  name="one_uploaded_file"/>
 
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
                                                   name="two_text_area">{{ two_text_area }}</textarea>
                                         </div>
                                         {% csrf_token %}
-                                        <input type="file" accept=".docx" class="form-control" name="two_uploaded_file"/>
+                                        <input type="file" accept=".docx,.doc,.pdf,.txt" class="form-control" name="two_uploaded_file"/>
                                     </div>
                                 </div>
                             </div>

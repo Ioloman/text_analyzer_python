@@ -36,7 +36,7 @@
                             </tr>
                             </thead>
                             <tbody id="firstList">
-                            {% for key, value in one_data %}
+                            {% for key, value in one_data.items %}
                                 <tr>
                                     <td class="table-fragment">{{ forloop.counter }}</td>
                                     <td class="table-fragment">{{ key }}</td>
@@ -76,7 +76,7 @@
                             </tr>
                             </thead>
                             <tbody id="secondList">
-                            {% for key, value in two_data %}
+                            {% for key, value in two_data.items %}
                                 <tr>
                                     <td class="table-fragment">{{ forloop.counter }}</td>
                                     <td class="table-fragment">{{ key }}</td>

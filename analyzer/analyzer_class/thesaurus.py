@@ -1,32 +1,63 @@
-from typing import Tuple, List, Iterator
+from collections import OrderedDict
+from typing import Dict, Union
+
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from analyzer.analyzer_class.read_file import ReadFile
 from analyzer.analyzer_class.singleton_meta import SingletonMeta
 from analyzer.analyzer_class.text_preprocessing import TextPreprocessing
-from analyzer.analyzer_class.tf_idf import TFIDF, compute_tfidf
-from analyzer.analyzer_class.candidates import Candidates
-from analyzer.analyzer_class.tokenizer import Tokenizer
+from analyzer.analyzer_class.tf_idf import compute_tfidf
 
 
 class Thesaurus(metaclass=SingletonMeta):
+    """
+    Класс для определения тезауруса и TF-IDF текста
+    """
     def __init__(self):
-        tokenizer = Tokenizer()
-        self.text_preprocessing = TextPreprocessing(tokenizer)
-        self.candidates = Candidates(tokenizer)
-        self.tf_idf = TFIDF()
+        self.__text_preprocessing = TextPreprocessing()
+        self.__read_file = ReadFile()
+        # значения для закона Хипса
         self.alpha = 15
         self.betta = 1.7
 
-    def __call__(self, text: str) -> Tuple[List[str], Iterator[Tuple[str, float]]]:
-        clean_sentences, ner, abbr = self.text_preprocessing(text)
-        candidates = self.candidates(clean_sentences, ner, abbr)
-        keys, values = compute_tfidf(candidates)
-        n = self.get_n(len(keys))
-        keys, values = self.get_thesaurus_range(keys, values, n)
-        return keys, zip(keys, values)
+    def __call__(self, text: Union[str, InMemoryUploadedFile]) -> Dict[str, float]:
+        text = self.__retrieve_text(text)
+        if not text:
+            return {}
+        clean_sentences = self.__text_preprocessing(text)
+        tfidf_dict = compute_tfidf(clean_sentences)
+        n = self.__get_n(len(tfidf_dict))
+        tfidf_dict = self.__get_thesaurus_range(tfidf_dict, n)
+        return tfidf_dict
 
-    def get_n(self, number_of_all_words: int) -> int:
+    def __get_n(self, number_of_all_words: int) -> int:
+        """
+        Определяет сколько слов нужно взять в тезаурус
+        :param number_of_all_words: число отобранных слов
+        :return: число слов
+        """
         return round(pow(number_of_all_words/self.alpha, 1/self.betta))
 
     @staticmethod
-    def get_thesaurus_range(keys: List[str], values: List[float], n: int) -> Tuple[List[str], List[float]]:
-        return keys[0:n], values[0:n]
+    def __get_thesaurus_range(dictionary: Dict[str, float], n: int) -> Dict[str, float]:
+        """
+        Возвращает словарь с n первыми значениями
+        :param dictionary: словарь
+        :param n: сколько значений оставить
+        :return: результирующий словарь
+        """
+        new_dict = OrderedDict()
+        for key in list(dictionary.keys())[0:n]:
+            new_dict[key] = dictionary[key]
+        return new_dict
+
+    def __retrieve_text(self, text: Union[str, InMemoryUploadedFile]) -> str:
+        """
+        Обрабатывает входной параметр. Если это файл, то считывает текст оттуда.
+        :param text:
+        :return:
+        """
+        if type(text) is str:
+            return text
+        elif type(text) is InMemoryUploadedFile:
+            return self.__read_file(text)
 

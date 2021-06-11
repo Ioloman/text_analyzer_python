@@ -1,7 +1,7 @@
 import json
+from typing import Dict
 from django.shortcuts import render
-from analyzer.analyzer_class.read_file import ReadFile
-from analyzer.analyzer_class.compatibility_analysis import CompatibilityAnalysis
+from analyzer.analyzer_class import calculate_compatibility, Thesaurus
 
 
 def index(request):
@@ -25,35 +25,22 @@ def result_analize_one(request):
 
 
 def result_analize_two(request):
-    one_material_name = ""
-    two_material_name = ""
-    one_text_area = ""
-    two_text_area = ""
-    one_uploaded_file = None
-    two_uploaded_file = None
-    read_file = ReadFile()
 
-    if 'one_material_name' in request.POST and request.POST['one_material_name']:
-        one_material_name = request.POST['one_material_name']
-    if 'one_text_area' in request.POST and request.POST['one_text_area']:
-        one_text_area = request.POST['one_text_area']
-    if 'one_uploaded_file' in request.FILES and request.FILES['one_uploaded_file']:
-        one_uploaded_file = request.FILES['one_uploaded_file']
-        one_uploaded_file = read_file(one_uploaded_file)
+    one_material_name = request.POST.get('one_material_name', '')
+    one_text_area = request.POST.get('one_text_area', '')
+    one_uploaded_file = request.FILES.get('one_uploaded_file', None)
 
-    if 'two_material_name' in request.POST and request.POST['two_material_name']:
-        two_material_name = request.POST['two_material_name']
-    if 'two_text_area' in request.POST and request.POST['two_text_area']:
-        two_text_area = request.POST['two_text_area']
-    if 'two_uploaded_file' in request.FILES and request.FILES['two_uploaded_file']:
-        two_uploaded_file = request.FILES['two_uploaded_file']
-        two_uploaded_file = read_file(two_uploaded_file)
+    two_material_name = request.POST.get('two_material_name', '')
+    two_text_area = request.POST.get('two_text_area', '')
+    two_uploaded_file = request.FILES.get('two_uploaded_file', None)
 
-    compatibility_analysis = CompatibilityAnalysis()
-    one_data, two_data, result = compatibility_analysis(one_text_area, two_text_area,
-                                                        one_uploaded_file, two_uploaded_file)
+    thesaurus = Thesaurus()
 
-    one_data, two_data = map(list, (one_data, two_data))
+    one_data: Dict[str: float] = thesaurus(one_uploaded_file if one_uploaded_file else one_text_area)
+    two_data: Dict[str: float] = thesaurus(two_uploaded_file if two_uploaded_file else two_text_area)
+
+    compatibility = calculate_compatibility(list(one_data.keys()), list(two_data.keys()))
+
     if not list(one_data) and not list(two_data):
         return render(request, 'html/analysis_two_materials/analysis.html',
                       {'one_material_name': one_material_name,
@@ -63,7 +50,7 @@ def result_analize_two(request):
                        'notification': "alert('Оба текста слишком короткие.')"}
                       )
 
-    json_data = json.dumps([one_data, two_data])
+    json_data = json.dumps([[(key, val) for key, val in one_data.items()], [(key, val) for key, val in two_data.items()]])
 
     js_code = f"alert('Текст \"{one_material_name if not one_data else two_material_name}\" слишком мал для определения тезауруса')" if not one_data or not two_data else ""
 
@@ -72,6 +59,6 @@ def result_analize_two(request):
                                                                       'two_material_name': two_material_name,
                                                                       'one_data': one_data,
                                                                       'two_data': two_data,
-                                                                      'result': result,
+                                                                      'result': compatibility,
                                                                       'json_data': json_data,
                                                                       'notification': js_code})
