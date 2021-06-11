@@ -13,7 +13,7 @@ class Thesaurus(metaclass=SingletonMeta):
     Класс для определения тезауруса и TF-IDF текста
     """
     def __init__(self):
-        self.__text_preprocessing = TextPreprocessing()
+        self.text_preprocessing = TextPreprocessing()
         self.__read_file = ReadFile()
         # значения для закона Хипса
         self.alpha = 15
@@ -23,7 +23,7 @@ class Thesaurus(metaclass=SingletonMeta):
         text = self.__retrieve_text(text)
         if not text:
             return {}
-        clean_sentences = self.__text_preprocessing(text)
+        clean_sentences = self.text_preprocessing(text)
         tfidf_dict = compute_tfidf(clean_sentences)
         n = self.__get_n(len(tfidf_dict))
         tfidf_dict = self.__get_thesaurus_range(tfidf_dict, n)

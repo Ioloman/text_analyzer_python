@@ -1,4 +1,4 @@
-from typing import Iterator, Tuple, List
+from typing import Iterator, List
 from analyzer.analyzer_class.cleaner import Cleaner
 from analyzer.analyzer_class.tokenizer import Tokenizer
 from analyzer.analyzer_class.normalizer import Normalizer
