@@ -2,7 +2,7 @@ import os
 from typing import NoReturn
 import textract
 from django.core.files.storage import FileSystemStorage
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.uploadedfile import UploadedFile
 from web_service_analyzer import settings
 
 
@@ -20,7 +20,7 @@ class ReadFile:
         return text
 
     @staticmethod
-    def __save_file(file: InMemoryUploadedFile) -> str:
+    def __save_file(file: UploadedFile) -> str:
         """
         Сохраняет файл
         :param file: файл который приходит в ответе через django

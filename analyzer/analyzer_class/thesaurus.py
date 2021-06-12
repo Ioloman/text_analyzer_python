@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from typing import Dict, Union
 
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.uploadedfile import UploadedFile
 from analyzer.analyzer_class.read_file import ReadFile
 from analyzer.analyzer_class.singleton_meta import SingletonMeta
 from analyzer.analyzer_class.text_preprocessing import TextPreprocessing
@@ -19,7 +19,7 @@ class Thesaurus(metaclass=SingletonMeta):
         self.alpha = 15
         self.betta = 1.7
 
-    def __call__(self, text: Union[str, InMemoryUploadedFile]) -> Dict[str, float]:
+    def __call__(self, text: Union[str, UploadedFile]) -> Dict[str, float]:
         text = self.__retrieve_text(text)
         if not text:
             return {}
@@ -50,7 +50,7 @@ class Thesaurus(metaclass=SingletonMeta):
             new_dict[key] = dictionary[key]
         return new_dict
 
-    def __retrieve_text(self, text: Union[str, InMemoryUploadedFile]) -> str:
+    def __retrieve_text(self, text: Union[str, UploadedFile]) -> str:
         """
         Обрабатывает входной параметр. Если это файл, то считывает текст оттуда.
         :param text:
@@ -58,6 +58,6 @@ class Thesaurus(metaclass=SingletonMeta):
         """
         if type(text) is str:
             return text
-        elif type(text) is InMemoryUploadedFile:
+        elif isinstance(text, UploadedFile):
             return self.__read_file(text)
 
